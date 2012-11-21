@@ -131,6 +131,7 @@ public:
 
         if (chr->GetTransport())
         {
+		/*
             uint32 tguid = chr->GetTransport()->AddNPCPassenger(0, id, chr->GetTransOffsetX(), chr->GetTransOffsetY(), chr->GetTransOffsetZ(), chr->GetTransOffsetO());
             if (tguid > 0)
             {
@@ -146,6 +147,13 @@ public:
 
                 WorldDatabase.Execute(stmt);
             }
+*/
+
+		Creature* creature = chr->GetTransport()->AddNPCPassenger(0, id, chr->GetTransOffsetX(), chr->GetTransOffsetY(), chr->GetTransOffsetZ(), chr->GetTransOffsetO());
+           if (creature)
+                WorldDatabase.PExecute("INSERT INTO creature_transport (guid, npc_entry, transport_entry,  TransOffsetX, TransOffsetY, TransOffsetZ, TransOffsetO) values (%u, %u, %f, %f, %f, %f, %u)", creature->GetGUIDTransport(), id, chr->GetTransport()->GetEntry(), chr->GetTransOffsetX(), chr->GetTransOffsetY(), chr->GetTransOffsetZ(), chr->GetTransOffsetO());
+
+
 
             return true;
         }
